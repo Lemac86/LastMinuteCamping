@@ -1,29 +1,24 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
-// README at: https://github.com/devcontainers/templates/tree/main/src/php-mariadb
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "PHP & MariaDB",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "app",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
-	"forwardPorts": [
-		8080,
-		3306
-	],
-	"features": {
-		"ghcr.io/devcontainers/features/node:1": {}
-	}
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "sudo chmod a+x \"$(pwd)\" && sudo rm -rf /var/www/html && sudo ln -s \"$(pwd)\" /var/www/html"
-
-	// Configure tool-specific properties.
-	// "customizations": {},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+    "name": "PHP & MariaDB (Community)",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    // "features": {},
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [5173, 3306, 8000, 8025],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "yarn install",
+    "postCreateCommand": "composer install && npm install && cp .env.example .env && php artisan key:generate && php artisan migrate --seed ",
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "extensions": ["Vue.volar", "esbenp.prettier-vscode", "yoavbls.pretty-ts-errors", "GitHub.copilot", "GitHub.copilot-labs","mhutchie.git-graph","eamodio.gitlens"]
+        }
+    },
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    "remoteUser": "root"
 }
