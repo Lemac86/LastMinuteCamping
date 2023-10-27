@@ -79,6 +79,7 @@ class DatabaseSeeder extends Seeder
                 'WLAN' => $e[17],
                 'strom' => $e[18],
                 'waschmaschine' => $e[19],
+                'bildURL' => $e[20]
             ]);
         }
 

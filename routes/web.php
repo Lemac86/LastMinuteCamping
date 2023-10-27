@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+namespace App\Http\Controllers;
+
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,7 +27,7 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'show'])->name('dashboard.show');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 

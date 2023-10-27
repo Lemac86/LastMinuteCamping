@@ -33,6 +33,7 @@ return new class extends Migration
             $table->boolean('WLAN');
             $table->boolean('strom');
             $table->boolean('waschmaschine');
+            $table->string('bildURL');
             $table->timestamps();
         });
     }
