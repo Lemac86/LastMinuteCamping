@@ -27,7 +27,7 @@ return new class extends Migration
             $table->boolean('dusche');
             $table->boolean('spielplatz');
             $table->boolean('tiereErlaubt');
-            $table->boolean('barriereFrei');
+            $table->boolean('barrierefrei');
             $table->boolean('bademoeglichkeit');
             $table->boolean('kiosk');
             $table->boolean('WLAN');

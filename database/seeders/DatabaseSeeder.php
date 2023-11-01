@@ -73,7 +73,7 @@ class DatabaseSeeder extends Seeder
                 'dusche' => $e[11],
                 'spielplatz' => $e[12],
                 'tiereErlaubt' => $e[13],
-                'barriereFrei' => $e[14],
+                'barrierefrei' => $e[14],
                 'bademoeglichkeit' => $e[15],
                 'kiosk' => $e[16],
                 'WLAN' => $e[17],

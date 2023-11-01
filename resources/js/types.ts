@@ -32,7 +32,7 @@ export type Campingground = {
     dusche: 0 | 1;
     spielplatz: 0 | 1;
     tiereErlaubt: 0 | 1;
-    barriereFrei: 0 | 1;
+    barrierefrei: 0 | 1;
     bademoeglichkeit: 0 | 1;
     kiosk: 0 | 1;
     WLAN: 0 | 1;
