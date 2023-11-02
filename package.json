@@ -3,7 +3,9 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build",
+        "reset": "php artisan migrate:fresh --seed",
+        "backend": "php artisan serve"
     },
     "devDependencies": {
         "@inertiajs/vue3": "^1.0.0",
