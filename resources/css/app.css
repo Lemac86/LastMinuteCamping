@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "camping-font";
+    src: url(Sriracha-Regular.ttf);
+}
+
+body {
+    background-image: url(gras5.jpg);
+    background-size: cover;
+}

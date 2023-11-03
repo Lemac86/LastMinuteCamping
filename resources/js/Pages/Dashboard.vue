@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import type { User, Rating, Campingground } from "@/types";
+import Dropdown from "@/Components/Dropdown.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
 import { Head } from "@inertiajs/vue3";
 import { toRefs } from "vue";
 import { computed, ref } from "vue";
@@ -69,58 +71,103 @@ const displayedArray = computed(() =>
 <template>
     <Head title="Welcome" />
     <div class="body">
+        <div class="profileDiv hidden sm:flex sm:items-center sm:ml-6">
+            <div class="ml-3 relative">
+                <Dropdown align="right" width="48">
+                    <template #trigger>
+                        <span class="inline-flex rounded-md">
+                            <button
+                                type="button"
+                                class="profileButton inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                            >
+                                {{ $page.props.auth.user.name }}
+
+                                <svg
+                                    class="ml-2 -mr-0.5 h-4 w-4"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </button>
+                        </span>
+                    </template>
+
+                    <template #content>
+                        <DropdownLink :href="route('profile.edit')">
+                            Profile
+                        </DropdownLink>
+                        <DropdownLink
+                            :href="route('logout')"
+                            method="post"
+                            as="button"
+                        >
+                            Log Out
+                        </DropdownLink>
+                    </template>
+                </Dropdown>
+            </div>
+        </div>
         <h1>Last Minute Camping</h1>
         <div class="h1Addon">Tent Edition</div>
         <h2>Finde deinen Zeltplatz</h2>
-        <div class="d-flex gap-5">
-            <div class="filterHeader text-white">Filteroptionen:</div>
-        </div>
-        <div class="backdropContentAligning gap-5">
-            <div class="extras">
-                <div
-                    class="extrasButtonAlignment"
-                    v-for="extra in Object.keys(filters)"
-                >
-                    <input
-                        type="checkbox"
-                        :id="extra"
-                        v-model="filters[extra as  keyof typeof filters]"
-                    />
-                    <label :for="extra" class="checkboxes ps-2">
-                        {{
-                            extra.charAt(0).toUpperCase() + extra.slice(1)
-                        }}</label
-                    >
-                </div>
-                <label id="priceLabel">Preis bis </label><br /><input
-                    type="search"
-                    v-model="maxPreis"
-                    name="Preis"
-                    id="priceInput"
-                /><label> € </label><br /><br />
-                <div class="bewertung">
-                    <label id="ratingLabel">Bewertung ab</label>
-                    <form class="star-rating">
-                        <template v-for="star in [5, 4, 3, 2, 1]">
+        <div class="contentDiv row g-0">
+            <div class="col-2">
+                <div class="pe-5">
+                    <div class="filterHeader text-white">Filteroptionen:</div>
+                    <div class="extras">
+                        <div
+                            class="extrasButtonAlignment"
+                            v-for="extra in Object.keys(filters)"
+                        >
                             <input
-                                class="radio-input"
-                                type="radio"
-                                v-model="minBewertung"
-                                :id="'star' + star"
-                                name="star-input"
-                                :value="star"
+                                type="checkbox"
+                                :id="extra"
+                                v-model="filters[extra as  keyof typeof filters]"
                             />
-                            <label
-                                class="radio-label"
-                                :for="'star' + star"
-                                :title="star + ' stars'"
-                                >{{ star + " stars" }}</label
+                            <label :for="extra" class="checkboxes ps-2">
+                                {{
+                                    extra.charAt(0).toUpperCase() +
+                                    extra.slice(1)
+                                }}</label
                             >
-                        </template>
-                    </form>
+                        </div>
+                        <label id="priceLabel">Preis bis </label><br /><input
+                            type="search"
+                            v-model="maxPreis"
+                            name="Preis"
+                            id="priceInput"
+                        /><label> € </label><br /><br />
+                        <div class="bewertung">
+                            <label id="ratingLabel">Bewertung ab</label>
+                            <form class="star-rating">
+                                <template v-for="star in [5, 4, 3, 2, 1]">
+                                    <input
+                                        class="radio-input"
+                                        type="radio"
+                                        v-model="minBewertung"
+                                        :id="'star' + star"
+                                        name="star-input"
+                                        :value="star"
+                                    />
+                                    <label
+                                        class="radio-label"
+                                        :for="'star' + star"
+                                        :title="star + ' stars'"
+                                        >{{ star + " stars" }}</label
+                                    >
+                                </template>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="d-flex">
+            <div class="col-10">
                 <div class="search">
                     <div class="searchSymbol">
                         <i class="bi bi-search text-white"></i>
@@ -135,7 +182,7 @@ const displayedArray = computed(() =>
                     />
                 </div>
                 <div class="list">
-                    <div class="card py-1" v-for="element in displayedArray">
+                    <div class="cardDiv py-1" v-for="element in displayedArray">
                         <div class="container">
                             <h5 class="mb-0 pb-0">
                                 <b>{{ element.ort }}</b>
@@ -160,7 +207,8 @@ const displayedArray = computed(() =>
                                     {{ element.anzahlFreierPlaetze }}
                                 </div>
                                 <div class="cardText">
-                                    Telefonnummer: {{ element.telefonnummer }}
+                                    Telefonnummer:
+                                    {{ element.telefonnummer }}
                                 </div>
                             </div>
                             <div class="d-flex justify-content-between">
@@ -179,16 +227,19 @@ const displayedArray = computed(() =>
     </div>
 </template>
 
-<style>
-@font-face {
-    font-family: "camping-font";
-    src: url(Sriracha-Regular.ttf);
+<style scoped>
+.profileDiv {
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    z-index: 2;
 }
 
-body {
-    background-image: url(gras5.jpg);
-    background-size: cover;
+.profileButton {
+    background-color: rgba(131, 155, 23, 0.8) !important;
+    color: white !important;
 }
+
 h1 {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
@@ -218,12 +269,17 @@ h2 {
     margin-bottom: 1vh;
     /* text-decoration: underline; */
 }
+
+.contentDiv {
+    height: 70vh;
+}
+
 .filterHeader {
     display: flex;
     padding-left: 20px;
     border-radius: 0 10px 0 0;
     align-items: center;
-    width: 10vw;
+    /* width: 10vw; */
     height: 2.5rem;
     background-color: rgba(131, 155, 23, 0.8);
 }
@@ -255,26 +311,23 @@ h2 {
     outline: none;
 }
 
-.backdropContentAligning {
-    display: flex;
-    flex-direction: row;
-    height: 65vh;
-}
 .list {
     /* margin: 0 auto; */
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     background-color: rgba(202, 205, 245, 0.5);
     width: 75vw;
+    height: calc(70vh - 2.5rem);
     border-radius: 0 0 10px 10px;
     backdrop-filter: blur(10px);
     overflow-y: scroll;
     scrollbar-width: none;
 }
 /* card START */
-.card {
+.cardDiv {
     font-family: Arial, Helvetica, sans-serif;
     box-shadow: 6px 8px 16px 0 rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.6);
     transition: 0.3s;
     margin: 10px;
     border-radius: 5px;
@@ -292,15 +345,16 @@ img {
 /* card END */
 .extras {
     padding-top: 15px;
+    padding-bottom: 15px;
     font-size: 17px;
     font-weight: 100;
     font-family: "camping-font";
 
     padding-left: 10px;
     backdrop-filter: blur(10px);
-    background-color: rgba(202, 205, 245, 0.5);
+    background-color: rgba(202, 205, 245, 0.4);
     border-radius: 0 0 10px 0;
-    width: 10vw;
+    height: calc(70vh - 2.5rem);
 }
 .extrasButtonAlignment {
     display: flex;
