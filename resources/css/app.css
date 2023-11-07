@@ -6,6 +6,14 @@
     font-family: "camping-font";
     src: url(Sriracha-Regular.ttf);
 }
+@font-face {
+    font-family: "camping-font1";
+    src: url(Handlee-Regular.ttf);
+}
+@font-face {
+    font-family: "camping-font2";
+    src: url(ElMessiri-Regular.ttf);
+}
 
 body {
     background-image: url(gras5.jpg);

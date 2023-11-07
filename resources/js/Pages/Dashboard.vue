@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Modal } from "custom-mbd-components";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import type { User, Rating, Campingground } from "@/types";
 import Dropdown from "@/Components/Dropdown.vue";
@@ -6,6 +7,9 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 import { Head } from "@inertiajs/vue3";
 import { toRefs } from "vue";
 import { computed, ref } from "vue";
+// @ts-expect-error
+import VueResizable from "vue-resizable";
+VueResizable;
 
 const props = defineProps<{
     users: User[];
@@ -182,45 +186,66 @@ const displayedArray = computed(() =>
                     />
                 </div>
                 <div class="list">
-                    <div class="cardDiv py-1" v-for="element in displayedArray">
-                        <div class="container">
-                            <h5 class="mb-0 pb-0">
-                                <b>{{ element.ort }}</b>
-                            </h5>
-                            <div class="cardText">
-                                {{ element.plz }}, {{ element.straße }}
-                                {{ element.hausnummer }}
-                            </div>
-                        </div>
-                        <img
-                            :src="element.bildURL"
-                            alt="bildLink"
-                            style="height: 300px; object-fit: cover"
-                        />
-                        <div class="container">
-                            <h5 class="pb-0 mb-0">
-                                <b>{{ element.name }}</b>
-                            </h5>
-                            <div class="d-flex justify-content-between">
-                                <div class="cardText">
-                                    Anzahl freier Platze:
-                                    {{ element.anzahlFreierPlaetze }}
-                                </div>
-                                <div class="cardText">
-                                    Telefonnummer:
-                                    {{ element.telefonnummer }}
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <div class="cardText">
-                                    Bewertung: {{ element.bewertung }}
-                                </div>
-                                <div class="cardText">
-                                    Preis: {{ element.preis }}
+                    <Modal v-for="element in displayedArray">
+                        <div class="cardDiv py-1">
+                            <img
+                                :src="element.bildURL"
+                                alt="bildLink"
+                                style="height: 300px; object-fit: cover"
+                            />
+                            <div class="container">
+                                <h5 class="pb-0 mb-0">
+                                    <b>{{ element.name }}</b>
+                                </h5>
+                                <div>
+                                    <div class="cardText">
+                                        Bewertung: {{ element.bewertung }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <template #button>
+                            <div class="cardDiv py-1">
+                                <div class="container">
+                                    <h5 class="mb-0 pb-0">
+                                        <b>{{ element.ort }}</b>
+                                    </h5>
+                                    <div class="cardText">
+                                        {{ element.plz }}, {{ element.straße }}
+                                        {{ element.hausnummer }}
+                                    </div>
+                                </div>
+                                <img
+                                    :src="element.bildURL"
+                                    alt="bildLink"
+                                    style="height: 300px; object-fit: cover"
+                                />
+                                <div class="container">
+                                    <h5 class="pb-0 mb-0">
+                                        <b>{{ element.name }}</b>
+                                    </h5>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="cardText">
+                                            Anzahl freier Platze:
+                                            {{ element.anzahlFreierPlaetze }}
+                                        </div>
+                                        <div class="cardText">
+                                            Telefonnummer:
+                                            {{ element.telefonnummer }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="cardText">
+                                            Bewertung: {{ element.bewertung }}
+                                        </div>
+                                        <div class="cardText">
+                                            Preis: {{ element.preis }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </Modal>
                 </div>
             </div>
         </div>
@@ -242,8 +267,9 @@ const displayedArray = computed(() =>
 
 h1 {
     text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "camping-font1";
     font-size: 60px;
+    font-weight: 900;
     padding-top: 5vh;
     position: relative;
     /* text-decoration: underline; */
@@ -264,8 +290,9 @@ h1 {
 h2 {
     text-align: center;
     padding-top: 8vh;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "camping-font1";
     font-size: 35px;
+    font-weight: 600;
     margin-bottom: 1vh;
     /* text-decoration: underline; */
 }
@@ -278,6 +305,8 @@ h2 {
     display: flex;
     padding-left: 20px;
     border-radius: 0 10px 0 0;
+    font-family: "camping-font1";
+    font-weight: 600;
     align-items: center;
     /* width: 10vw; */
     height: 2.5rem;
@@ -300,7 +329,7 @@ h2 {
 }
 .searchInput {
     width: 70vw;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "camping-font1";
     font-size: 1rem;
     border-radius: 0 10px 0 0;
     border: none;
@@ -347,8 +376,8 @@ img {
     padding-top: 15px;
     padding-bottom: 15px;
     font-size: 17px;
-    font-weight: 100;
-    font-family: "camping-font";
+    font-weight: 800;
+    font-family: "camping-font1";
 
     padding-left: 10px;
     backdrop-filter: blur(10px);
